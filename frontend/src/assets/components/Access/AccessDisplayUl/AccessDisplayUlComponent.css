@@ -1,0 +1,71 @@
+.access-display-ul{
+    height: 75vb;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: white;
+    border-radius: 15px;
+    transition: 0.2s;
+}
+
+.access-display-li-top{
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    font-size: 10px;
+    border-bottom: 0.1px solid rgba(204, 204, 204, 0.636);
+    position: sticky;
+    gap: 20px;
+    background-color: rgb(110, 110, 110);
+    color: white;
+    padding: 1rem 0px;
+}
+
+.access-display-li{
+    display: flex;
+    position: relative;
+    justify-content: start;
+    align-items: start;
+    padding-top: 8px;
+    gap: 20px;
+    min-height: 40px;
+    border-bottom: 0.1px solid rgba(204, 204, 204, 0.625);
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.access-display-ul-id{
+    width: 7%;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+}
+
+.access-display-ul-name{
+    width: 21%;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+}
+
+.access-display-ul-description{
+   max-width: 70%;
+   overflow-x: hidden;
+   font-size: 10px;
+}
+.access-display-li.selected{
+    background-color:  rgba(209, 209, 209, 0.323);
+    border-bottom: 0.2px solid rgba(135, 135, 135, 0.501);
+}
+
+
+.access-display-li:hover{
+    background-color:  rgba(209, 209, 209, 0.625);
+}
+
+.access-display-ul-description.open span{
+    white-space: normal;
+}
+
+

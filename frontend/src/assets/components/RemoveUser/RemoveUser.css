@@ -1,0 +1,32 @@
+.div-removeuser-popup{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 40rem;
+    background-color: rgb(244, 244, 244);
+    -webkit-box-shadow: 0px 0px 14px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 14px -4px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 14px -4px rgba(0,0,0,0.75);
+    transition: 0.3;
+    border-radius: 10px;
+    padding: 35px;
+    position: relative;
+    transition: 1s;
+}
+
+
+.div-select-and-btn-removeuser{
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    width: 100%;
+}
+
+.div-loading-removeuser{
+    position: absolute;
+    bottom: 50px;
+    right: 35px;
+}

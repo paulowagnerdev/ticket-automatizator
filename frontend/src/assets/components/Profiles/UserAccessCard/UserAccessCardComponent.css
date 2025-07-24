@@ -1,0 +1,33 @@
+#div-profile-access-information-span{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    font-size: 11px;
+}
+
+#div-profile-access-information{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    font-size: 12px;
+    padding: 20px;
+}
+
+#div-profile-access-information li{
+    font-weight: bold;
+    font-size: 13px;
+    color: green;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+#div-profile-access-information span{
+    font-size: 15px;
+}
+
+#profile-span{
+    font-weight: bold;
+}

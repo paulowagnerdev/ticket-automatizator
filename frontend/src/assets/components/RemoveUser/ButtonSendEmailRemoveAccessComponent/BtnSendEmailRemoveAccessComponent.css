@@ -1,0 +1,21 @@
+.button-submit-remove-user{
+    margin-top: 15px;
+    width: 130px;
+    height:  42px;
+    border-radius: 50px;
+    border: 0.1px solid rgb(180, 180, 180);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    gap: 5px;
+    background-color: rgb(139, 13, 13);
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+
+.button-submit-remove-user:hover{
+    background-color: rgb(211, 16, 16);
+}

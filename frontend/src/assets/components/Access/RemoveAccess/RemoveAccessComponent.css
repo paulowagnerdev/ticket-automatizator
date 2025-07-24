@@ -1,0 +1,58 @@
+.div-remove-access-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 5rem;
+    position: absolute;
+    width: 96%;
+    height: 100vb;
+    top: 0;
+    background-color: rgba(145, 145, 145, 0.474);
+}
+
+.div-remove-access{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    gap: 15px;
+    height: 200px;
+    border-radius: 15px;
+    background-color: rgb(255, 255, 255);
+    padding: 30px;
+}
+
+.header-remove-access{
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    height: 15px;
+    padding: 5px;
+}
+.div-buttons-remove-access{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    gap: 10px;
+}
+.button-cancel-remove-access{
+    width: 130px;
+    height:  42px;
+    border-radius: 50px;
+    border: 0.1px solid rgb(180, 180, 180);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    gap: 5px;
+    background-color: rgb(175, 175, 175);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+
+.button-cancel-remove-access:hover{
+    background-color: rgb(130, 130, 130);
+}

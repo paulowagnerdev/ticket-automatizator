@@ -1,0 +1,82 @@
+#ul-display-profile{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    min-height: 80vb;
+    width: 100%;
+    overflow: auto;
+    background-color: white;
+    border-radius: 15px;
+}
+
+.li-display-profile-static,
+.li-display-profile{
+    display: flex;
+    font-size: 12px;
+    font-weight: 400;
+    flex-basis: 15px;
+    justify-content: space-around;
+    width: 100%;
+    height: 40px;
+}
+
+.li-display-profile-static{
+    position: sticky;
+    top: 0;
+    font-weight: bold;
+    padding: 7px;
+    border-bottom: 0.1px solid rgb(211, 211, 211);
+
+}
+
+.li-display-profile.clicked{
+  background-color: #dedede;
+  font-size: 13px;
+  padding: 25px 0px;
+
+}
+
+.li-display-profile.clicked:hover{
+     background-color: #dedede;
+}
+
+.li-display-profile{
+    padding: 5px 0px;
+    display: flex;
+    align-items: center;
+    transition: 0.1s;
+    cursor: pointer;
+    border-bottom: 0.1px solid rgba(211, 211, 211, 0.384);
+}
+
+.li-display-profile:hover{
+    background-color: rgb(208, 203, 203);
+}
+
+.div-li-display-id-static,
+.div-li-display-id{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    
+}
+
+.div-li-display-id-static,
+.div-li-display-id{
+    width: 20%;
+  
+}
+
+.div-li-display-id-static{
+    border-right: 0.1px solid rgba(211, 211, 211, 0.499);
+}
+
+.div-li-display-name-static,
+.div-li-display-name{
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

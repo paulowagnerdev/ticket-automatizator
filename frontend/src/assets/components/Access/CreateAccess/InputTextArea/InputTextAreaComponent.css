@@ -1,0 +1,18 @@
+.div-input-description-textarea{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 60%;
+    gap: 3px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: rgba(238, 238, 238, 0.877);
+    padding: 1rem;
+}
+
+#description{
+    height: 100%;
+    resize: none;
+    padding: 0.8rem;
+    border-radius: 15px;
+}

@@ -1,0 +1,51 @@
+.div-add-user-popup{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    width: 52rem;
+    background-color: rgb(244, 244, 244);
+    -webkit-box-shadow: 0px 0px 14px -4px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 14px -4px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 14px -4px rgba(0,0,0,0.75);
+    transition: 0.3;
+    border-radius: 10px;;
+    padding: 35px;
+    position: relative;
+    transition: 5s;
+}
+
+.selects-div-components{
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0px;
+}
+
+#erro-input-text{
+    position: absolute;
+    bottom: -12px;
+    font-size: 8px;
+    color: red;
+}
+
+
+.show-error-classname{
+    border: 0.1px solid red !important;
+}
+
+
+#exit-icon{
+    position: absolute;
+    right: 7px;
+    top: 7px;
+    font-size: 23px;
+    color: rgb(139, 139, 139);
+    cursor: pointer;
+}
+
+
+.div-loading-adduser{
+    top: 35px;
+    right: 90px;
+    position: absolute;
+}

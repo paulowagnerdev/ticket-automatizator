@@ -1,0 +1,30 @@
+.header-access-component{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 60px;
+    padding: 3rem 1rem;
+}
+
+.search-input-div-access{
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+#search-input-access{
+    margin-right: 25px;
+    width: 470px;
+    height: 50px;
+    border-radius: 50px;
+    padding: 10px 25px;
+    border: 0.1px solid rgb(180, 180, 180);
+}
+
+#icon-search-homepage-access{
+    position: absolute;
+    right: 35px;
+    z-index: 0;
+    color: rgb(180, 180, 180);
+    
+}

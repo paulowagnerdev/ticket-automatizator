@@ -1,0 +1,28 @@
+.button-remove-access{
+    width: 130px;
+    height:  42px;
+    border-radius: 50px;
+    border: 0.1px solid rgb(180, 180, 180);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 12px;
+    gap: 5px;
+    background-color: rgb(211, 16, 16);
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.button-remove-access.disable{
+    background-color: rgb(209, 209, 209);
+    cursor: not-allowed;
+}
+
+.button-remove-access.disable:hover{
+    background-color: rgb(209, 209, 209);
+}
+
+.button-remove-access:hover{
+    background-color: rgb(139, 13, 13);
+}

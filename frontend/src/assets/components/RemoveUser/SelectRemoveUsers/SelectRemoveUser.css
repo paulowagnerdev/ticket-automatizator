@@ -1,0 +1,14 @@
+.remove-user-div{
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+.remove-user-div select{
+    margin-top: 7px;
+    height: 43px;
+    border: 0.1px solid rgb(207, 207, 207);
+    border-radius: 10px;
+    padding: 5px 15px;
+    width:  100%;
+}

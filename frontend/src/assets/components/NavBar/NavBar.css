@@ -1,0 +1,82 @@
+.navBar{
+    width: 50px;
+    height: 100%;
+    position: absolute;
+    transition: 0.2s;
+    background-color: #E21717;
+    z-index: 5;
+}
+
+.fixed-right-div{
+    width: 58px;
+}
+
+.navBar:hover{
+    width: 190px;
+}
+
+.logo{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px 15px;
+    font-size: 20px;
+    color: #022E55;
+}
+
+.ul-navbar{
+    margin-top: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'OsacaM', sans-serif;
+    font-size: 15px;
+}
+
+.ul-navbar li{
+   padding: 0;
+   max-height: 35px;
+   width: 100%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}
+
+.ul-navbar a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 17px 25px;
+    height: 25px;
+    width: 100%;
+    text-decoration: none;
+    color: rgb(245, 243, 240);
+    transition: 0.2s;
+    
+}
+
+.ul-navbar a:hover,
+.ul-navbar a:hover > .navbar-icons{
+   color: rgb(17, 11, 1);
+}
+
+
+
+.navbar-icons{
+    transition: 0.2s;
+    font-size: 20px;
+    color: rgb(245, 243, 240);
+}
+
+.noShow{
+    display: none;
+   
+}
+
+.show{
+    display: flex;
+    justify-content: space-between !important;
+    gap: 5px;    
+}

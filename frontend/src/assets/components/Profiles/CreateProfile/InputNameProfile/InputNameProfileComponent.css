@@ -1,0 +1,35 @@
+.div-input-perfil-name{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    min-width: 300px;
+    max-width: 300px;
+    gap: 5px;
+}
+
+.div-input-perfil-name label span{
+    color: red;
+}
+
+.div-input-perfil-name label{
+    font-size: 18px;
+   
+}
+
+.div-input-perfil-name input{
+    height: 40px;
+    border: 0.1px solid rgb(207, 207, 207);
+    border-radius: 10px;
+    padding: 5px 15px;
+}
+
+#error-input-profile{
+    position: absolute;
+    font-size: 9px;
+    color: red;
+    bottom: -11px;
+}
+
+.error-input-profile-border{
+    border: 0.1px solid red !important;
+}

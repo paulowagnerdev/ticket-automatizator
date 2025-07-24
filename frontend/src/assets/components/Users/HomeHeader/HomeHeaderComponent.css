@@ -1,0 +1,32 @@
+#header-home{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 75px;
+    border-bottom: 0.1ox solid rgb(83, 83, 83);
+    padding-left: 1rem;
+}
+
+.search-input-div{
+    display: flex;
+    position: relative;
+    align-items: center;
+}
+
+#search-input-homepage{
+    margin-right: 25px;
+    width: 470px;
+    height: 50px;
+    border-radius: 50px;
+    padding: 10px 25px;
+    border: 0.1px solid rgb(180, 180, 180);
+}
+
+#icon-search-homepage{
+    position: absolute;
+    right: 35px;
+    z-index: 1;
+    color: rgb(180, 180, 180);
+    
+}
