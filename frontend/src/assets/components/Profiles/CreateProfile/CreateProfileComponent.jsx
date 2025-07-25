@@ -103,6 +103,8 @@ const CreateProfileComponent = ({
             accessClicked={accessClicked}
             setAccessClicked={setAccessClicked}
             setCheckboxClicked={setCheckboxClicked}
+            setNewProfile={setNewProfile}
+            setInputValidations={setInputValidations}
           />
         </div>
 

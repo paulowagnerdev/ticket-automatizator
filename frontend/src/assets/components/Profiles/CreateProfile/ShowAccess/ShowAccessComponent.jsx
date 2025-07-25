@@ -2,7 +2,13 @@ import "./ShowAccessComponent.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const ShowAccessComponent = ({ accessClicked, setAccessClicked,setCheckboxClicked }) => {
+const ShowAccessComponent = ({
+  accessClicked,
+  setAccessClicked,
+  setCheckboxClicked,
+  setNewProfile,
+  setInputValidations
+}) => {
   const handleDeleteAccess = (id) => {
     let list = accessClicked;
 
@@ -10,6 +16,8 @@ const ShowAccessComponent = ({ accessClicked, setAccessClicked,setCheckboxClicke
       if (access.id == id) {
         list = list.filter((access) => access.id != id);
       }
+
+      handleSetNewProfile(list);
     });
 
     setAccessClicked(list);
@@ -22,6 +30,29 @@ const ShowAccessComponent = ({ accessClicked, setAccessClicked,setCheckboxClicke
         return { ...prev, [id]: id };
       }
     });
+  };
+
+  const handleSetNewProfile = (listAccess) => {
+    setNewProfile((prev) => ({
+      ...prev,
+      access: listAccess,
+    }));
+
+    validCheckbox(listAccess);
+  };
+
+  const validCheckbox = (accessList) => {
+    if (accessList.length >= 1) {
+      setInputValidations((prev) => ({
+        ...prev,
+        checkBox: true,
+      }));
+    } else {
+      setInputValidations((prev) => ({
+        ...prev,
+        checkBox: false,
+      }));
+    }
   };
 
   return (

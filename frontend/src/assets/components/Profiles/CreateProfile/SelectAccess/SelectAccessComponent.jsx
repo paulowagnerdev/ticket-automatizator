@@ -5,7 +5,6 @@ const SelectAccessComponent = ({
   setInputValidations,
   accessClicked,
   setAccessClicked,
-  newProfile,
   setNewProfile,
   checkboxClicked,
   setCheckboxClicked,
@@ -42,7 +41,6 @@ const SelectAccessComponent = ({
       temporaryAccess.push({ id: id, name: name });
     }
 
-    console.log(temporaryAccess);
     setAccessClicked(temporaryAccess);
     handleSetNewProfile(temporaryAccess);
     setCheckboxDisplay(id);
