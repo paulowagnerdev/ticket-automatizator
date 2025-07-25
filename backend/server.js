@@ -96,13 +96,22 @@ app.delete('/user', (req, res) => {
 
 })
 
-app.post('/profile', (req,res) => {
-  const {name,access} = req.body;
-  
-  console.log(name);
-  console.log(access);
+app.post('/profile', (req, res) => {
 
-  res.json({msg: "chegou"});
+  let { name, access } = req.body;
+  access = [];
+  if (!name || name.trim().length < 3) {
+    return res.status(400).json({ error: "ERRO! NOME INVÁLIDO!" , title: "ERRO 400", msg: "NOME INVÁLIDO!" });
+  } else if (!Array.isArray(access) || access.length == 0) {
+    return res.status(400).json({ error: "ERRO! ACESSOS INVÁLIDO!" , title: "ERRO 400", msg: "ACESSOS INVÁLIDO!" });
+  }
+
+  access.forEach(element => {
+    console.log(element);
+  });
+
+
+  res.json({ msg: "chegou" });
 
 })
 

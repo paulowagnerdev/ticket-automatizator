@@ -32,22 +32,22 @@ const CreateProfileComponent = ({
 
   const handleCreateNewProfile = () => {
     const verifyHasErrors = showMsgErrors();
-   if(verifyHasErrors){
-    setShowAlertErrorMsg("in");
-   }else{
-    console.log(newProfile);
-   }
+    if (verifyHasErrors) {
+      setShowAlertErrorMsg("in");
+    } else {
+      createProfile(newProfile);
+    }
   };
 
   const showMsgErrors = () => {
     if (!inputValidations.perfilName && !inputValidations.checkBox) {
-      setContentMsg({title: "2 Erros!", msg: "Informar Nome e Acesso!"});
+      setContentMsg({ title: "2 Erros!", msg: "Informar Nome e Acesso!" });
       return true;
     } else if (!inputValidations.perfilName) {
-      setContentMsg({title: "Erro!", msg: "Informar Nome!"});
+      setContentMsg({ title: "Erro!", msg: "Informar Nome!" });
       return true;
     } else if (!inputValidations.checkBox) {
-      setContentMsg({title: "Erro!", msg: "Informar Acesso!"});
+      setContentMsg({ title: "Erro!", msg: "Informar Ao Menos 01 Acesso!" });
       return true;
     }
     return false;
@@ -62,11 +62,14 @@ const CreateProfileComponent = ({
         },
         body: JSON.stringify(profile),
       });
-      const data = await createProfile.json();
-
+      const res = await createProfile.json();
+      
       if (createProfile.ok) {
-        handleTransitionOpenAndClose();
-        console.log(data);
+        //handleTransitionOpenAndClose();
+      }else{
+         console.log(res);
+         setContentMsg({ title: res.title, msg: res.msg });
+         setShowAlertErrorMsg("in");
       }
     } catch (err) {
       console.error(`ERRO NO CADASTRO DE PERFIL ${err}`);
