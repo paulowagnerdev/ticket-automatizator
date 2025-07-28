@@ -1,4 +1,5 @@
 import NavBar from "../NavBar/NavBar";
+import AlertMsg from "../../hooks/AlertMsg.jsx"
 import ProfileHeaderComponent from "./ProfileHeader/ProfileHeaderComponent";
 import DisplayProfilesUl from "./DisplayProfilesUl/DisplayProfilesUl";
 import ButtonAddProfile from "./ButtonAddProfile/ButtonAddProfile";
@@ -6,27 +7,28 @@ import BtnRemoveProfileComponent from "./ButtonRemoveProfile/BtnRemoveProfileCom
 import ProfileAccessCardComponent from "./ProfileAccessCard/ProfileAccessCardComponent";
 import UserAccessCardComponent from "./UserAccessCard/UserAccessCardComponent";
 import CreateProfileComponent from "./CreateProfile/CreateProfileComponent.jsx";
-import AlertMsgErrorComponent from "../AlertMsgError/AlertMsgErrorComponent.jsx";
 import "./Profiles.css";
 import { useState } from "react";
 
 function AddProfile() {
   const [enableButtonRemoveUser, setEnableButtonRemoveUser] = useState(true);
   const [openCreateProfile, setOpenCreateProfile] = useState(false);
+  //--------------------------------Show Alert Mensage on Display------------------------------------------
   const [showAlertSuccessMsg, setShowAlertSuccessMsg] = useState("off");
   const [showAlertErrorMsg, setShowAlertErrorMsg] = useState("off");
   const [contentMsg, setContentMsg] = useState({
     title: "Title!",
     msg: "Mensagem!",
   });
-
+  //--------------------------------Show Alert Mensage on Display------------------------------------------
   return (
     <>
-      <AlertMsgErrorComponent
+      <AlertMsg
+        contentMsg={contentMsg}
+        showAlertSuccessMsg={showAlertSuccessMsg}
+        setShowAlertSuccessMsg={setShowAlertSuccessMsg}
         showAlertErrorMsg={showAlertErrorMsg}
         setShowAlertErrorMsg={setShowAlertErrorMsg}
-        title={contentMsg.title}
-        msg={contentMsg.msg}
       />
       <NavBar />
 
@@ -64,7 +66,10 @@ function AddProfile() {
           <CreateProfileComponent
             setOpenCreateProfile={setOpenCreateProfile}
             setContentMsg={setContentMsg}
+            showAlertErrorMsg={showAlertErrorMsg}
             setShowAlertErrorMsg={setShowAlertErrorMsg}
+            showAlertSuccessMsg={showAlertSuccessMsg}
+            setShowAlertSuccessMsg={setShowAlertSuccessMsg}
           />
         ) : null}
       </div>

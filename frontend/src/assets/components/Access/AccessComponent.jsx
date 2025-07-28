@@ -1,4 +1,5 @@
 import NavBar from "../NavBar/NavBar";
+import AlertMsg from "../../hooks/AlertMsg.jsx";
 import "./AccessComponent.css";
 import AccessHeaderComponent from "./AccessHeader/AccessHeaderComponent.jsx";
 import AccessDisplayUlComponent from "./AccessDisplayUl/AccessDisplayUlComponent.jsx";
@@ -6,13 +7,11 @@ import BtnRemoveAccessComponent from "./ButtonRemoveAccess/BtnRemoveAccessCompon
 import BtnAddAccessComponent from "./ButtonAddAccess/BtnAddAccessComponent.jsx";
 import CreateAccessComponent from "./CreateAccess/CreateAccessComponent.jsx";
 import RemoveAccessComponent from "./RemoveAccess/RemoveAccessComponent.jsx";
-import AlertMsgSuccessComponent from "../AlertMsgError/AlertMsgSuccessComponent.jsx";
-import AlertMsgErrorComponent from "../AlertMsgError/AlertMsgErrorComponent.jsx";
 import { useState } from "react";
 
 const AccessComponent = () => {
   //--------------------------------Remove Access------------------------------------------
-  const [removeAccess,setRemoveAccess] = useState({});
+  const [removeAccess, setRemoveAccess] = useState({});
   //--------------------------------Remove Access------------------------------------------
   //--------------------------------Show Alert Mensage on Display------------------------------------------
   const [showAlertSuccessMsg, setShowAlertSuccessMsg] = useState("off");
@@ -31,27 +30,23 @@ const AccessComponent = () => {
   const [enableBtnRemoveAccess, setEnableBtnRemoveAccess] = useState(false);
   //--------------------------------Enable button Remove Users------------------------------------------
 
-//--------------------------------Open Display Create Access------------------------------------------
+  //--------------------------------Open Display Create Access------------------------------------------
   const [openCreateAccessComponent, setOpenCreateAccessComponent] =
     useState(false);
-//--------------------------------Open Display Create Access------------------------------------------
+  //--------------------------------Open Display Create Access------------------------------------------
 
-//--------------------------------Open Display Remove Access------------------------------------------
+  //--------------------------------Open Display Remove Access------------------------------------------
   const [openRemoveAccessComponent, setOpenRemoveAccessComponent] =
     useState(false);
-//--------------------------------Open Display Remove Access------------------------------------------
+  //--------------------------------Open Display Remove Access------------------------------------------
   return (
     <>
       <NavBar />
-      <AlertMsgSuccessComponent
-        title={contentMsg.title}
-        msg={contentMsg.msg}
-        showAlertMsg={showAlertSuccessMsg}
-        setShowAlertMsg={setShowAlertSuccessMsg}
-      />
-      <AlertMsgErrorComponent
-        title={contentMsg.title}
-        msg={contentMsg.msg}
+
+      <AlertMsg
+        contentMsg={contentMsg}
+        showAlertSuccessMsg={showAlertSuccessMsg}
+        setShowAlertSuccessMsg={setShowAlertSuccessMsg}
         showAlertErrorMsg={showAlertErrorMsg}
         setShowAlertErrorMsg={setShowAlertErrorMsg}
       />
@@ -72,7 +67,6 @@ const AccessComponent = () => {
               setShowAlertErrorMsg={setShowAlertErrorMsg}
               setContentMsg={setContentMsg}
               setRefetchTrigger={setRefetchTrigger}
-              
             />
           ) : null}
           {openRemoveAccessComponent ? (

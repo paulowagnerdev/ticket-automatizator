@@ -11,6 +11,7 @@ const CreateProfileComponent = ({
   setOpenCreateProfile,
   setContentMsg,
   setShowAlertErrorMsg,
+  setShowAlertSuccessMsg,
 }) => {
   const [inputValidations, setInputValidations] = useState({
     perfilName: false,
@@ -41,13 +42,15 @@ const CreateProfileComponent = ({
 
   const showMsgErrors = () => {
     if (!inputValidations.perfilName && !inputValidations.checkBox) {
-      setContentMsg({ title: "2 Erros!", msg: "Informar Nome e Acesso!" });
+      setContentMsg({ title: "ERRO!", msg: "Informar Nome e Acesso!" });
+      setShowMsgErrorPerfilName(true);
       return true;
     } else if (!inputValidations.perfilName) {
-      setContentMsg({ title: "Erro!", msg: "Informar Nome!" });
+      setShowMsgErrorPerfilName(true);
+      setContentMsg({ title: "ERRO!", msg: "Informar Nome!" });
       return true;
     } else if (!inputValidations.checkBox) {
-      setContentMsg({ title: "Erro!", msg: "Informar Ao Menos 01 Acesso!" });
+      setContentMsg({ title: "ERRO!", msg: "Informar Ao Menos 01 Acesso!" });
       return true;
     }
     return false;
@@ -63,13 +66,18 @@ const CreateProfileComponent = ({
         body: JSON.stringify(profile),
       });
       const res = await createProfile.json();
-      
+
       if (createProfile.ok) {
-        //handleTransitionOpenAndClose();
-      }else{
-         console.log(res);
-         setContentMsg({ title: res.title, msg: res.msg });
-         setShowAlertErrorMsg("in");
+        setContentMsg({
+          title: "Concluído!",
+          msg: "Cadastro Realizado com Sucesso!",
+        });
+        setShowAlertSuccessMsg("in");
+        handleTransitionOpenAndClose();
+      } else {
+        console.log(res);
+        setContentMsg({ title: res.title, msg: res.msg });
+        setShowAlertErrorMsg("in");
       }
     } catch (err) {
       console.error(`ERRO NO CADASTRO DE PERFIL ${err}`);

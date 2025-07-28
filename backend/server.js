@@ -98,8 +98,7 @@ app.delete('/user', (req, res) => {
 
 app.post('/profile', (req, res) => {
 
-  let { name, access } = req.body;
-  access = [];
+  const { name, access } = req.body;
   if (!name || name.trim().length < 3) {
     return res.status(400).json({ error: "ERRO! NOME INVÁLIDO!" , title: "ERRO 400", msg: "NOME INVÁLIDO!" });
   } else if (!Array.isArray(access) || access.length == 0) {

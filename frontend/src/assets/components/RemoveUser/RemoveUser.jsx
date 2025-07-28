@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faXmark } from '@fortawesome/free-solid-svg-icons'
 import SelectRemoveUser from './SelectRemoveUsers/SelectRemoveUser'
 import BtnSendEmailRemoveAccessComponent from './ButtonSendEmailRemoveAccessComponent/BtnSendEmailRemoveAccessComponent'
-import LoadingCicleComponent from '../LoadingCircle/LoadingCircleComponent'
+import LoadingCicleComponent from "../../hooks/LoadingCircle/LoadingCircleComponent"
 import './removeUser.css'
 
 function RemoveUser({functionClosePopUp}) {
