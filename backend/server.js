@@ -100,11 +100,23 @@ app.post('/profile', (req, res) => {
 
   const { name, access } = req.body;
   if (!name || name.trim().length < 3) {
-    return res.status(400).json({ error: "ERRO! NOME INVÁLIDO!" , title: "ERRO 400", msg: "NOME INVÁLIDO!" });
+    return res.status(400).json({ error: "ERRO! NOME INVÁLIDO!", title: "ERRO 400", msg: "NOME INVÁLIDO!" });
   } else if (!Array.isArray(access) || access.length == 0) {
-    return res.status(400).json({ error: "ERRO! ACESSOS INVÁLIDO!" , title: "ERRO 400", msg: "ACESSOS INVÁLIDO!" });
+    return res.status(400).json({ error: "ERRO! ACESSOS INVÁLIDO!", title: "ERRO 400", msg: "ACESSOS INVÁLIDO!" });
   }
 
+  const query = "INSERT INTO profiles (nome) VALUES (?)"
+  connection.query(query, [name], (err, result) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    console.log(`Result: ${result.insertId}`);
+    connection.end;
+  })
+
+  console.log("---------------------------------------------------------------------");
+  console.log(`Name: ${name}`);
   access.forEach(element => {
     console.log(element);
   });
