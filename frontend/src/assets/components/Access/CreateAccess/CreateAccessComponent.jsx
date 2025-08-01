@@ -70,7 +70,7 @@ const CreateAccessComponent = ({
 
     function errorMsg() {
       setContentMsg((data) => ({
-        title: data.title || "ERROR!",
+        title: "ERROR!",
         msg: "Não foi possível Cadastrar",
       }));
       setShowAlertErrorMsg("in");

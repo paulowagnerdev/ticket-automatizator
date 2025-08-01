@@ -8,9 +8,10 @@ app.use(cors());
 app.use(express());
 app.use(express.json());
 
-//--------------------------SQL Connection---------------------------------//
-const mysql = require('mysql2');
-const connection = mysql.createConnection({
+
+const mysql = require('mysql2/promise');
+const pool = mysql.createPool({
+  connectionLimit: 10,
   host: 'localhost',
   user: 'root',
   password: 'mysql123',
@@ -20,106 +21,149 @@ const connection = mysql.createConnection({
   }
 });
 
-connection.connect(function (err) {
-  if (err) {
-    console.error("Erro ao inserir dados no Database");
-  } else {
-    console.log("Connection with mysql succeeded");
+
+app.get('/access', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM access_types');
+    res.json(rows);
+  } catch (err) {
+    console.error("ERROR!" + err)
+    res.send({
+      title: "ERROR!",
+      msg: "ERRO AO CONECTAR COM O BD!"
+    })
   }
-});
-
-//--------------------------SQL Connection---------------------------------//
-
-//--------------------------Routes---------------------------------//
-
-
-app.get('/access', (req, res) => {
-
-  connection.query('SELECT * FROM access_types', function (err, access) {
-    if (err) console.error(err);
-
-    res.send(access);
-  })
-
 })
 
-app.post('/access', (req, res) => {
+app.post('/access', async (req, res) => {
 
-  const access = req.body;
+  const { name, description } = req.body;
 
-  if (access.name.length <= 40) {
-    const queryInsertAccess = `INSERT INTO access_types (name,description) VALUES (?,?)`;
-    connection.query(queryInsertAccess, [access.name, access.description], function (err, access) {
-      if (err) {
-        console.error(err);
-        res.status(500).json({
-          title: "Erro!",
-          msg: "Não foi possível cadastrar o acesso.",
-        });
-      } else {
-        res.status(201).json({
-          title: "Sucesso!",
-          msg: "Cadastro de Acesso"
-        })
-      }
-    })
+  if (!name || name.trim().length === 0) {
+    return res.status(400).json({
+      title: "Erro!",
+      msg: "O campo 'name' é obrigatório."
+    });
+  }
+
+  if (name.length > 40) {
+    return res.status(400).json({
+      title: "Erro!",
+      msg: "Número de caracteres excedido! Máximo permitido: 40."
+    });
+  }
+
+  if (name.length <= 40) {
+    try {
+      const [result] = await pool.query(`INSERT INTO access_types (name,description) VALUES (?,?)`, [name, description]);
+
+      res.status(201).json({
+        title: "Sucesso!",
+        msg: "Cadastro de Acesso"
+      })
+    } catch (err) {
+      console.error("ERRO AO INSERIR NO BANCO");
+      res.status(500).json({
+        title: "Erro!",
+        msg: "Não foi possível cadastrar o acesso.",
+      });
+    }
+
   } else {
-    console.error("NÚMERO DE CARACTERES ACIMA DE 40!")
-    console.error(access.name.length)
-    res.status(500).json({
+    console.error("NÚMERO DE CARACTERES ACIMA DE 40!");
+    res.status(400).json({
       title: "Erro!",
       msg: "Número de Caracteres excedido!.",
     });
   }
 
 
-})
+});
 
-app.delete('/access/:id', (req, res) => {
+app.delete('/access/:id', async (req, res) => {
+
   const accessId = req.params.id;
 
-  const queryRemoveAccess = 'DELETE from access_types WHERE id = ?';
-  connection.query(queryRemoveAccess, [accessId], function (err, deleteAccess) {
-    if (err) {
-      res.status(500).json({ title: "Erro!", msg: "Erro ao excluir usuário!" });
-    } else {
-      res.status(200).json({ title: "Sucesso!", msg: "Usuário Excluído" });
-    }
-  })
-
-})
-
-app.delete('/user', (req, res) => {
-
-  const id = req.body
-  console.log(id);
-
-})
-
-app.post('/profile', (req, res) => {
-
-  const { name, access } = req.body;
-  if (!name || name.trim().length < 3) {
-    return res.status(400).json({ error: "ERRO! NOME INVÁLIDO!", title: "ERRO 400", msg: "NOME INVÁLIDO!" });
-  } else if (!Array.isArray(access) || access.length == 0) {
-    return res.status(400).json({ error: "ERRO! ACESSOS INVÁLIDO!", title: "ERRO 400", msg: "ACESSOS INVÁLIDO!" });
+  console.log(accessId);
+  if (isNaN(accessId)) {
+    return res.status(400).json({
+      error: "ERRO! ACESSOS INVÁLIDO!",
+      title: "ERRO 400",
+      msg: "Id Inválida!"
+    })
   }
 
-  const query = "INSERT INTO profiles (nome) VALUES (?)"
-  connection.query(query, [name], (err, result) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
-    console.log(`Result: ${result.insertId}`);
-    connection.end;
-  })
+  try {
+    const [result] = await pool.query("DELETE FROM access_types WHERE id = ?", [accessId])
 
-  console.log("---------------------------------------------------------------------");
-  console.log(`Name: ${name}`);
-  access.forEach(element => {
-    console.log(element);
-  });
+    if (result.affectedRows === 0) {
+      return res.status(404).json({
+        title: "Erro!",
+        msg: "Registro não encontrado."
+      });
+    }
+
+    return res.status(200).json({
+      title: "Sucesso!",
+      msg: "Acesso excluído com sucesso."
+    });
+
+  } catch (error) {
+    console.error("Erro ao excluir:", err);
+    return res.status(500).json({
+      title: "ERRO!",
+      msg: "Erro ao deletar!"
+    })
+  }
+})
+
+app.post('/profile', async (req, res) => {
+
+  const { name, access } = req.body;
+
+  if (!name || name.trim().length < 3) {
+    return res.status(400).json({ error: "ERRO! NOME INVÁLIDO!", title: "ERRO 400", msg: "NOME INVÁLIDO!" });
+  }
+
+  if (!Array.isArray(access) || access.length == 0) {
+    return res.status(400).json({ error: "ERRO! ACESSOS INVÁLIDO!", title: "ERRO 400", msg: "ACESSOS INVÁLIDO!" });
+  }
+  let connection;
+  try {
+
+    connection = await pool.getConnection();
+    await connection.beginTransaction();
+
+    const [result] = await connection.query("INSERT INTO profiles (nome) VALUES (?)", [name]);
+
+    const profileId = result.insertId;
+
+    const ids = access.map(access => access.id);
+    const [rowsSelectAccess, fields] = await connection.query(`SELECT * FROM access_types WHERE id IN (${ids.map(id => '?').join(',')})`, ids);
+
+    if (rowsSelectAccess.length !== ids.length) {
+      console.error("rollback");
+      await connection.rollback();
+      return res.status(400).json({ error: "Alguns IDs de acesso são inválidos" });
+    }
+
+    const values = ids.map((accesId) => [profileId, accesId, 1]);
+    //const [rowsInsertAccess] = await connection.query(`INSERT INTO profile_access (profile_id,access_id,permitido) VALUES(?,?,?)`, [values]);
+
+    console.log(values);
+
+    await connection.commit();
+    return res.status(201).json({ message: "Perfil criado com sucesso" });
+
+  } catch (err) {
+    await connection.rollback();
+    console.error(err)
+    res.status(500).json({
+      title: "ERRO!",
+      msg: "Erro ao realizar cadastro"
+    })
+  }
+
 
 
   res.json({ msg: "chegou" });
@@ -229,7 +273,7 @@ function insertValuesInSql(values) {
     ${values.nameemail}
     )`
 
-  connection.query(sql, function (err, fill) {
+  pool.query(sql, function (err, fill) {
 
     if (err) throw err
 
