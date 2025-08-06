@@ -122,51 +122,72 @@ app.post('/profile', async (req, res) => {
   const { name, access } = req.body;
 
   if (!name || name.trim().length < 3) {
-    return res.status(400).json({ error: "ERRO! NOME INVÁLIDO!", title: "ERRO 400", msg: "NOME INVÁLIDO!" });
+    return res.status(400).send({ error: "ERRO!", title: 'ERRO!', msg: "Nome com caracteres inválidos" });
   }
 
   if (!Array.isArray(access) || access.length == 0) {
-    return res.status(400).json({ error: "ERRO! ACESSOS INVÁLIDO!", title: "ERRO 400", msg: "ACESSOS INVÁLIDO!" });
+    return res.status(400).send({ error: "ERRO!", title: 'ERRO!', msg: "Insira ao menos UM acesso!" });
   }
+
   let connection;
+
   try {
 
     connection = await pool.getConnection();
     await connection.beginTransaction();
 
-    const [result] = await connection.query("INSERT INTO profiles (nome) VALUES (?)", [name]);
+    const [rowsProfile] = await connection.query('INSERT INTO profiles(nome) VALUES (?)', [name.trim()]);
 
-    const profileId = result.insertId;
+    const idProfile = rowsProfile.insertId;
 
-    const ids = access.map(access => access.id);
-    const [rowsSelectAccess, fields] = await connection.query(`SELECT * FROM access_types WHERE id IN (${ids.map(id => '?').join(',')})`, ids);
-
-    if (rowsSelectAccess.length !== ids.length) {
-      console.error("rollback");
-      await connection.rollback();
-      return res.status(400).json({ error: "Alguns IDs de acesso são inválidos" });
+    if (rowsProfile.affectedRows == 0) {
+      connection.rollback();
+      return res.status(400).send({ error: "ERRO!", title: 'ERRO!', msg: "Erro de cadastro!" });
+    } else {
+      console.log(`SUCCESSFUL INSERTION ID: ${rowsProfile.insertId}`);
     }
 
-    const values = ids.map((accesId) => [profileId, accesId, 1]);
-    //const [rowsInsertAccess] = await connection.query(`INSERT INTO profile_access (profile_id,access_id,permitido) VALUES(?,?,?)`, [values]);
+    const ids = access.map(ids => ids.id);
+    const [rowsAccess] = await connection.query(`SELECT * FROM access_types WHERE id IN(${ids.map(id => '?').join(',')})`, ids);
 
-    console.log(values);
+    if (rowsAccess.length !== ids.length) {
+      connection.rollback();
+      return res.status(400).send({ error: "ERRO!", title: 'ERRO!', msg: "inconsistência dos Dados!" });
+    } else {
+      console.log(`SUCCESSFUL SELECTED ID:`);
+      console.log(rowsAccess);
+    }
 
-    await connection.commit();
-    return res.status(201).json({ message: "Perfil criado com sucesso" });
+    const insertProfileAccess = ids.map(ids => [idProfile, ids]);
 
-  } catch (err) {
-    await connection.rollback();
-    console.error(err)
-    res.status(500).json({
-      title: "ERRO!",
-      msg: "Erro ao realizar cadastro"
-    })
+    console.log(insertProfileAccess);
+
+    const [rowsInsertAccess] = await connection.query('INSERT INTO profile_access(profile_id,access_id) VALUES ?', [insertProfileAccess]);
+    if (rowsInsertAccess.affectedRows !== insertProfileAccess.length) {
+      connection.rollback();
+    }
+    console.log(rowsInsertAccess.info);
+
+    connection.commit();
+
+    return res.status(201).json({
+      success: true,
+      title: "Sucesso!",
+      msg: "Profile criado com sucesso!",
+      profileId: idProfile,
+      accessCount: ids.length
+    });
+
+  } catch (error) {
+    if(connection){
+      await connection.rollback();
+    }
+    console.error(error);
+    res.status(500).send({ error: "ERRO!", title: 'ERRO!', msg: "Erro de cadastro!" });
+  } finally {
+    if (connection) connection.release();
   }
 
-
-
-  res.json({ msg: "chegou" });
 
 })
 
