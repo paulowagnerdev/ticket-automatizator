@@ -24,7 +24,7 @@ const pool = mysql.createPool({
 
 app.get('/access', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM access_types');
+    const [rows] = await pool.query('SELECT in,nome FROM access_types');
     res.json(rows);
   } catch (err) {
     console.error("ERROR!" + err)
@@ -152,7 +152,7 @@ app.post('/profile', async (req, res) => {
 
     if (rowsAccess.length !== ids.length) {
       connection.rollback();
-      return res.status(400).send({ error: "ERRO!", title: 'ERRO!', msg: "inconsistência dos Dados!" });
+      return res.status(400).send({ error: "ERRO!", title: 'ERRO!', msg: "Inconsistência dos Dados!" });
     } else {
       console.log(`SUCCESSFUL SELECTED ID:`);
       console.log(rowsAccess);
@@ -165,6 +165,7 @@ app.post('/profile', async (req, res) => {
     const [rowsInsertAccess] = await connection.query('INSERT INTO profile_access(profile_id,access_id) VALUES ?', [insertProfileAccess]);
     if (rowsInsertAccess.affectedRows !== insertProfileAccess.length) {
       connection.rollback();
+      return res.status(500).send({ error: "ERRO!", msg: "Falha ao inserir acessos" });
     }
     console.log(rowsInsertAccess.info);
 
@@ -179,11 +180,17 @@ app.post('/profile', async (req, res) => {
     });
 
   } catch (error) {
-    if(connection){
+    if (connection) {
       await connection.rollback();
     }
     console.error(error);
-    res.status(500).send({ error: "ERRO!", title: 'ERRO!', msg: "Erro de cadastro!" });
+    return res.status(500).json({
+      success: false,
+      title: "Erro!",
+      msg: "Erro no cadastro!",
+      profileId: idProfile,
+      accessCount: ids.length
+    });
   } finally {
     if (connection) connection.release();
   }
@@ -191,14 +198,23 @@ app.post('/profile', async (req, res) => {
 
 })
 
-app.get("/profile", (req, res) => {
+app.get("/profile", async (req, res) => {
 
-  const dados = "DADOS";
+  try {
 
-  res.send({
-    msg: 'teste'
-  });
+    const [rowsProfile] = await pool.query(`SELECT * FROM profiles`);
+    console.log(rowsProfile);
+    res.json(rowsProfile);
 
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      title: "Erro!",
+      msg: "Erro no cadastro!",
+      //profileId: idProfile,
+      // accessCount: ids.length
+    });
+  }
 
 })
 

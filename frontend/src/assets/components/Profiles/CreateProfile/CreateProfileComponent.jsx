@@ -50,7 +50,7 @@ const CreateProfileComponent = ({
       setContentMsg({ title: "ERRO!", msg: "Informar Nome!" });
       return true;
     } else if (!inputValidations.checkBox) {
-      setContentMsg({ title: "ERRO!", msg: "Informar Ao Menos 01 Acesso!" });
+      setContentMsg({ title: "ERRO!", msg: "Informar ao Menos 01 Acesso!" });
       return true;
     }
     return false;
@@ -76,7 +76,7 @@ const CreateProfileComponent = ({
         handleTransitionOpenAndClose();
       } else {
         console.log(res);
-        setContentMsg({ title: res.title, msg: res.msg });
+        setContentMsg({ title: "Erro!", msg: "Erro no Cadastro" });
         setShowAlertErrorMsg("in");
       }
     } catch (err) {

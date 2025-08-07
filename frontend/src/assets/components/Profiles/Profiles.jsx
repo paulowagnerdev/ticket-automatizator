@@ -13,6 +13,7 @@ import { useState } from "react";
 function AddProfile() {
   const [enableButtonRemoveUser, setEnableButtonRemoveUser] = useState(true);
   const [openCreateProfile, setOpenCreateProfile] = useState(false);
+  const [refetchTrigger, setRefetchTrigger] = useState(0);
   //--------------------------------Show Alert Mensage on Display------------------------------------------
   const [showAlertSuccessMsg, setShowAlertSuccessMsg] = useState("off");
   const [showAlertErrorMsg, setShowAlertErrorMsg] = useState("off");
@@ -38,6 +39,7 @@ function AddProfile() {
 
           <DisplayProfilesUl
             propSetEnableButtonRemoveUser={setEnableButtonRemoveUser}
+            refetchTrigger={refetchTrigger}
           />
 
           <div className="div-button-add-profile">

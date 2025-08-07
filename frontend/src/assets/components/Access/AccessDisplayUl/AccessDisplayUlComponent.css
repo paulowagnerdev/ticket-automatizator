@@ -1,10 +1,10 @@
 .access-display-ul{
-    height: 75vb;
+    max-height: 70vb;
     display: flex;
     flex-direction: column;
     overflow-x: hidden;
     overflow-y: auto;
-    background-color: white;
+    background-color: rgb(255, 0, 0);
     border-radius: 15px;
     transition: 0.2s;
 }

@@ -1,28 +1,36 @@
 import { useState } from "react";
 import "./DisplayProfilesUl.css";
 
-const DisplayProfilesUl = ({ propSetEnableButtonRemoveUser }) => {
-  //------------Variables------------
-
+const DisplayProfilesUl = ({
+  propSetEnableButtonRemoveUser,
+  refetchTrigger,
+}) => {
   const [isClicled, setIsClicled] = useState({});
-  const profiles = [
-    { id: 1, name: "Administrativo" },
-    { id: 2, name: "Operacional" },
-    { id: 3, name: "R.H" },
-    { id: 4, name: "T.I" },
-  ];
+  const [profiles, setProfiles] = useState([]);
 
-  // ------------Functions------------
+  useState(async () => {
+    try {
+      const getProfiles = await fetch("http://localhost:3000/profile", {
+        method: "GET",
+      });
+      const data = await getProfiles.json();
+      if(getProfiles.ok){
+        setProfiles(data);
+      }
+
+      
+
+    } catch (error) {
+      console.error("Errro na requisição!");
+    }
+  }, [refetchTrigger]);
 
   const handleGetProfileOnClicked = (id, name) => {
     setProfileOnClicked(id);
     const profile = [id, name];
-    console.log(profile);
   };
 
   function setProfileOnClicked(id) {
-    // ------------Toggle list:------------
-
     const clickedId = Object.keys(isClicled)[0];
 
     if (clickedId == id.toString()) {
@@ -34,8 +42,6 @@ const DisplayProfilesUl = ({ propSetEnableButtonRemoveUser }) => {
       propSetEnableButtonRemoveUser(false);
     }
   }
-
-  // ------------Component------------
 
   return (
     <ul id="ul-display-profile">
@@ -51,10 +57,10 @@ const DisplayProfilesUl = ({ propSetEnableButtonRemoveUser }) => {
               : "li-display-profile"
           }
           key={profile.id}
-          onClick={() => handleGetProfileOnClicked(profile.id, profile.name)}
+          onClick={() => handleGetProfileOnClicked(profile.id, profile.nome)}
         >
           <div className="div-li-display-id">{profile.id}</div>
-          <div className="div-li-display-name">{profile.name}</div>
+          <div className="div-li-display-name">{profile.nome}</div>
         </li>
       ))}
     </ul>
