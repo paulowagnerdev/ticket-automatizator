@@ -14,12 +14,9 @@ const DisplayProfilesUl = ({
         method: "GET",
       });
       const data = await getProfiles.json();
-      if(getProfiles.ok){
+      if (getProfiles.ok) {
         setProfiles(data);
       }
-
-      
-
     } catch (error) {
       console.error("Errro na requisição!");
     }
@@ -27,7 +24,7 @@ const DisplayProfilesUl = ({
 
   const handleGetProfileOnClicked = (id, name) => {
     setProfileOnClicked(id);
-    const profile = [id, name];
+    //const profile = [id, name];
   };
 
   function setProfileOnClicked(id) {

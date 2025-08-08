@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: start;
     align-items: center;
-    min-height: 80vb;
+    max-height: 80vb;
     width: 100%;
     overflow: auto;
     background-color: white;
@@ -26,7 +26,9 @@
     top: 0;
     font-weight: bold;
     padding: 7px;
-    border-bottom: 0.1px solid rgb(211, 211, 211);
+    border-bottom: 0.1px solid rgb(0, 0, 0);
+    background-color: white;
+    height: 60px;
 
 }
 

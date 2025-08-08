@@ -24,7 +24,7 @@ const pool = mysql.createPool({
 
 app.get('/access', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT in,nome FROM access_types');
+    const [rows] = await pool.query('SELECT id,name FROM access_types');
     res.json(rows);
   } catch (err) {
     console.error("ERROR!" + err)

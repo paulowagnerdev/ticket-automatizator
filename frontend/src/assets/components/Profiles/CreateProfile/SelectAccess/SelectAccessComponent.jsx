@@ -21,6 +21,7 @@ const SelectAccessComponent = ({
 
         if (getAccess.ok) {
           const data = await getAccess.json();
+          console.log(data);
           setSelectAcces(data);
         }
       } catch (err) {
