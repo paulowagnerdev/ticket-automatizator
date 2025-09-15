@@ -201,32 +201,41 @@ app.post('/profile', async (req, res) => {
 app.get("/profile", async (req, res) => {
 
   try {
+    const [rows] = await pool.query('SELECT * FROM profiles');
 
-    const [rowsProfile] = await pool.query(`SELECT * FROM profiles`);
-    console.log(rowsProfile);
-    res.json(rowsProfile);
+    if (!rows) {
+      return res.status(500).json({
+        success: false,
+        msg: 'Erro na requisição'
+      })
+    }
+
+    res.json(rows);
 
   } catch (err) {
+    console.error(err);
     return res.status(500).json({
       success: false,
-      title: "Erro!",
-      msg: "Erro no cadastro!",
-      //profileId: idProfile,
-      // accessCount: ids.length
-    });
+      msg: 'Erro na requisição'
+    })
   }
 
 })
 
+app.get("/profile/:id/access", async (req, res) => {
 
-app.get('/cadastros', (req, res) => {
+  const { id } = req.params;
 
-  /* connection.query('SELECT * FROM cadastro',  function(err,cadastros){
- 
-     if(err) throw err
- 
-     res.send(cadastros);
- })*/
+  try {
+    const [rows] = await pool.query('SELECT * FROM profile_access WHERE profile_id = (?)', [id]);
+    res.json(rows);
+    console.log(rows);
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      msg: 'Erro na requisição'
+    })
+  }
 
 })
 
@@ -269,9 +278,6 @@ app.listen(port, () => {
   console.log(`Server Online on ${port}`);
 })
 
-//--------------------------Routes---------------------------------//
-
-//--------------------------NodeMailer Configuration---------------------------------//
 
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -283,7 +289,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-//--------------------------NodeMailer Configuration---------------------------------//
 
 function insertValuesInSql(values) {
   const sql = `INSERT INTO cadastro(

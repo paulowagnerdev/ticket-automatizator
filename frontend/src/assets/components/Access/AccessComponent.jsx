@@ -10,35 +10,18 @@ import RemoveAccessComponent from "./RemoveAccess/RemoveAccessComponent.jsx";
 import { useState } from "react";
 
 const AccessComponent = () => {
-  //--------------------------------Remove Access------------------------------------------
   const [removeAccess, setRemoveAccess] = useState({});
-  //--------------------------------Remove Access------------------------------------------
-  //--------------------------------Show Alert Mensage on Display------------------------------------------
   const [showAlertSuccessMsg, setShowAlertSuccessMsg] = useState("off");
   const [showAlertErrorMsg, setShowAlertErrorMsg] = useState("off");
   const [contentMsg, setContentMsg] = useState({
     title: "Title!",
     msg: "Mensagem!",
   });
-  //--------------------------------Show Alert Mensage on Display------------------------------------------
-
-  //--------------------------------UseEffect Ul renderizator------------------------------------------
   const [refetchTrigger, setRefetchTrigger] = useState(0);
-  //--------------------------------UseEffect Ul renderizator------------------------------------------
-
-  //--------------------------------Enable button Remove Users------------------------------------------
   const [enableBtnRemoveAccess, setEnableBtnRemoveAccess] = useState(false);
-  //--------------------------------Enable button Remove Users------------------------------------------
+  const [openCreateAccessComponent, setOpenCreateAccessComponent] = useState(false);
+  const [openRemoveAccessComponent, setOpenRemoveAccessComponent] = useState(false);
 
-  //--------------------------------Open Display Create Access------------------------------------------
-  const [openCreateAccessComponent, setOpenCreateAccessComponent] =
-    useState(false);
-  //--------------------------------Open Display Create Access------------------------------------------
-
-  //--------------------------------Open Display Remove Access------------------------------------------
-  const [openRemoveAccessComponent, setOpenRemoveAccessComponent] =
-    useState(false);
-  //--------------------------------Open Display Remove Access------------------------------------------
   return (
     <>
       <NavBar />

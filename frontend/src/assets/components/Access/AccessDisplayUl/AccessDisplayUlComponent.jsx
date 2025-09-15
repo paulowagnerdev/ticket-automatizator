@@ -10,6 +10,7 @@ const AccessDisplayUlComponent = ({
   const [access, setAccess] = useState([]);
 
   useEffect(() => {
+    console.log("Carregou")
     const url = "http://localhost:3000/access";
     const getAssyncAcces = async () => {
       try {

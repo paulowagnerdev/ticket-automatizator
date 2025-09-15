@@ -12,6 +12,8 @@ const CreateProfileComponent = ({
   setContentMsg,
   setShowAlertErrorMsg,
   setShowAlertSuccessMsg,
+  setRefetchTrigger,
+  refetchTrigger,
 }) => {
   const [inputValidations, setInputValidations] = useState({
     perfilName: false,
@@ -57,6 +59,7 @@ const CreateProfileComponent = ({
   };
 
   async function createProfile(profile) {
+    console.log(refetchTrigger);
     try {
       const createProfile = await fetch("http://localhost:3000/profile", {
         method: "POST",
@@ -68,6 +71,7 @@ const CreateProfileComponent = ({
       const res = await createProfile.json();
 
       if (createProfile.ok) {
+        setRefetchTrigger(prev => prev + 1);
         setContentMsg({
           title: "Concluído!",
           msg: "Cadastro Realizado com Sucesso!",

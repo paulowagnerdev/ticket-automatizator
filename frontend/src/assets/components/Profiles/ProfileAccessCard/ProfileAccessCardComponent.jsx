@@ -1,29 +1,27 @@
 import "./ProfileAccessCardComponent.css";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { useEffect, useState } from "react";
 
-const ProfileAccessComponent = () => {
-  const profileAccess = [
-    { id: 1, profile: "Administrativo", nameAcces: "TMS XT", isPermited: true },
-    { id: 2, profile: "Administrativo", nameAcces: "RMS", isPermited: true },
-    {
-      id: 3,
-      profile: "Administrativo",
-      nameAcces: "Trucks Control",
-      isPermited: true,
-    },
-    {
-      id: 4,
-      profile: "Administrativo",
-      nameAcces: "QualyTeam",
-      isPermited: true,
-    },
-    { id: 5, profile: "Administrativo", nameAcces: "HCM", isPermited: true },
-  ];
+const ProfileAccessComponent = ({ profile }) => {
+  const data = { nameAcces: "TMS XT", isPermited: true };
+  const [loading, setLoading] = useState(false);
+  const [profileAccess, setProfileAccess] = useState([]);
+
+  if (loading) {
+    return (
+      <>
+        <div className="loading-profile-card-container">
+          <p>...loading</p>
+        </div>
+      </>
+    );
+  }
 
   return (
     <div className="profile-card-container">
-      {profileAccess.length == 0 ? (
+      {profileAccess.length === 0 ? (
         <div id="div-profile-access-information-span">
           <span>Informe Perfil para verificar acessos...</span>
         </div>
@@ -31,8 +29,8 @@ const ProfileAccessComponent = () => {
         <>
           <div id="div-profile-access-information">
             <span>
-              O Perfil <span id="profile-span">{profileAccess[0].profile}</span>{" "}
-              tem os seguintes acessos:
+              O Perfil <span id="profile-span">{profile.profile}</span> tem os
+              seguintes acessos:
             </span>
             <br />
             <ul>

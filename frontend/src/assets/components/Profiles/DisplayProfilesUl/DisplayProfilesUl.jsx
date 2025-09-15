@@ -1,30 +1,33 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import requestProfiles from "../services/profiles";
 import "./DisplayProfilesUl.css";
 
 const DisplayProfilesUl = ({
   propSetEnableButtonRemoveUser,
   refetchTrigger,
+  setRefetchTriggerCards,
+  setIdprofile
 }) => {
   const [isClicled, setIsClicled] = useState({});
   const [profiles, setProfiles] = useState([]);
 
-  useState(async () => {
-    try {
-      const getProfiles = await fetch("http://localhost:3000/profile", {
-        method: "GET",
-      });
-      const data = await getProfiles.json();
-      if (getProfiles.ok) {
-        setProfiles(data);
+  useEffect(() => {
+    async function getProfiles() {
+      try {
+        const profiles = await requestProfiles();
+        setProfiles(profiles);
+      } catch (err) {
+        console.error("Erro na requisição" + err);
       }
-    } catch (error) {
-      console.error("Errro na requisição!");
     }
+
+    getProfiles();
   }, [refetchTrigger]);
 
   const handleGetProfileOnClicked = (id, name) => {
     setProfileOnClicked(id);
-    //const profile = [id, name];
+    setRefetchTriggerCards((prev) => prev + 1);
+    setIdprofile(id);
   };
 
   function setProfileOnClicked(id) {
@@ -44,7 +47,7 @@ const DisplayProfilesUl = ({
     <ul id="ul-display-profile">
       <li className="li-display-profile-static">
         <div className="div-li-display-id-static">id</div>
-        <div className="div-li-display-name-static">Acessos</div>
+        <div className="div-li-display-name-static">Perfis</div>
       </li>
       {profiles.map((profile) => (
         <li
